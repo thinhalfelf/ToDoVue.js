@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en" data-framework="vue">
+	<head>
+		<meta charset="utf-8">
+		<title>Vue todo</title>
+		<link rel="stylesheet" href="assets/base.css">
+		<link rel="stylesheet" href="assets/index.css">
+		<script src="https://unpkg.com/vue"></script>
+	</head>
+	<body>
+		<section class="todoapp">
+			<header class="header">
+				<h1>todos</h1>
+				<input class="new-todo"
+				  v-model="newTodo"
+					v-on:keyup.enter="addTodo"
+				placeholder="Что надо сделать?" autofocus>
+			</header>
+			<section class="main">
+				<ul class="todo-list">
+					<li v-for="todo in filteredTodos"
+						:class="{ completed: todo.completed, editing: todo == editedTodo}">
+						<div class="view">
+								<input class="toggle" type="checkbox" v-model="todo.completed" />
+								<label @dblclick="editTodo(todo)">{{ todo.title }}</label>
+								<button class="destroy" @click="removeTodo(todo)"></button>
+						</div>
+						<input class="edit" type="text" v-model="todo.title" @blur="doneEdit(todo)" @keyup.enter="doneEdit(todo)" />
+					</li>
+				</ul>
+				<input class="toggle-all" id="toggle-all" type="checkbox" @click="markAll">
+				<label for="toggle-all">Пометить всё</label>
+				<ul class="todo-list"></ul>
+			</section>
+			<footer class="footer">
+				<ul class="filters">
+					<li><a href="#" @click.prevent="visibility='all'"  :class="{ selected: visibility == 'all' }">Все</a></li>
+					<li><a href="#" @click.prevent="visibility='active'" :class="{ selected: visibility == 'active' }">Активные</a></li>
+					<li><a href="#" @click.prevent="visibility='completed'" :class="{ selected: visibility == 'completed' }">Готово</a></li>
+				</ul>
+			</footer>
+		</section>
+		<footer class="info">
+			<p>Двойное нажатие для редактирования</p>
+		</footer>
+
+		<script src="main.js"></script>
+	</body>
+</html>
